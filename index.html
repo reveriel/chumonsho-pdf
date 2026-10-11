@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>注文書 PDF 生成ツール｜無料・登録不要・ブラウザだけで作成</title>
+<meta name="description" content="フリーランス・個人事業主・小規模事業者向けの注文書（発注書）を無料で作成し、PDF として保存・印刷できるツールです。注文番号・注文日・納期・支払条件・明細（品名・数量・単位・単価）・消費税（10% / 8%）まで入力するだけで、A4 の注文書がブラウザ内で完成します。登録不要、外部送信なし。">
+<meta name="keywords" content="注文書,注文書 テンプレート,注文書 無料,注文書 PDF,発注書,発注書 テンプレート,個人事業主,フリーランス,注文書 書き方">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="./index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="注文書 PDF 生成ツール｜無料・登録不要">
+<meta property="og:description" content="注文番号・納期・支払条件・消費税まで対応した注文書を無料で作成し、PDF 保存できます。ブラウザ内で完結。">
+<meta property="og:locale" content="ja_JP">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231e3a8a'/%3E%3Cpath d='M9 8h10l5 5v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z' fill='%23ffffff'/%3E%3Cpath d='M19 8v5h5' fill='%23c7d2fe'/%3E%3Cg stroke='%231e3a8a' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M12 13h4M11 17h10M11 20h10M11 23h6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6fc01bf3ac5e457ba1bd16b91e5b653e"}'></script><!-- End Cloudflare Web Analytics -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "注文書 PDF 生成ツール",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "フリーランス・個人事業主・小規模事業者向けの注文書（発注書）をブラウザ上で作成し、A4 の PDF として保存・印刷できる無料ツールです。",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+      "featureList": [
+        "注文番号・注文日・納期の記載",
+        "注文元・注文先（仕入先）の情報管理",
+        "支払条件のプリセット選択と自由入力",
+        "明細行（品名・数量・単位・単価）の追加・削除と自動計算",
+        "消費税率 10% / 8%（軽減税率）の切り替え",
+        "A4 縦の印刷・PDF 保存",
+        "入力内容はブラウザ内のみで処理"
+      ],
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "注文書と発注書は何が違いますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "実務上はほぼ同じ意味で使われます。買い手が売り手へ「この内容で発注します」と伝える書面を指し、本ツールでは表題を「注文書」としたうえで、書類の性格は同じものとして作成できます。取引先の呼び方に合わせて使い分けてください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "注文書に印鑑（社印・角印）は必要ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "法律上の必須要件ではありませんが、商慣習として社印や角印を押して発行する場面が多くあります。本ツールはブラウザ上で書類を作るため捺印はできません。PDF を印刷したうえで押印するか、電子契約サービスをご利用ください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "注文書に登録番号（インボイス番号）は必要ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "注文書はインボイス制度上の適格請求書ではないため、登録番号の記載は必須ではありません。本ツールも登録番号欄は設けていません。実際に仕入れた後の請求・支払では、別途 適格請求書（請求書）で処理します。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "納期や支払条件はどう記載すればよいですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "本ツールでは納期を注文日から 7日・14日・30日・60日、または任意の日付で指定できます。支払条件は「月末締め翌月末払い」「納品時現金」などのプリセットから選ぶか、自由に入力できます。取引先との取り決めに合わせてください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "入力した内容はサーバーに送信されますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "いいえ。入力内容はサーバーへ送信されず、お使いの端末のブラウザ内だけで処理されます。ページを閉じると内容は破棄されます。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="site-header no-print">
+  <div class="wrap header-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="currentColor"/>
+        <path d="M9 8h10l5 5v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z" fill="#fff"/>
+        <path d="M19 8v5h5" fill="#c7d2fe"/>
+        <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <path d="M12 13h4M11 17h10M11 20h10M11 23h6"/>
+        </g>
+      </svg>
+      <div class="brand-text">
+        <strong>注文書 作成ツール</strong>
+        <span>無料・登録不要・ブラウザ内で完結</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button type="button" class="btn btn-primary" id="printBtn">
+        <svg viewBox="0 0 20 20" aria-hidden="true" class="ic">
+          <path d="M6 7V3h8v4M6 15H4.5A1.5 1.5 0 0 1 3 13.5v-4A1.5 1.5 0 0 1 4.5 8h11A1.5 1.5 0 0 1 17 9.5v4a1.5 1.5 0 0 1-1.5 1.5H14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="6" y="12" width="8" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        印刷 / PDF保存
+      </button>
+      <button type="button" class="btn btn-ghost" id="resetBtn">リセット</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap layout">
+
+  <!-- ============ 入力フォーム ============ -->
+  <section class="pane form-pane no-print" aria-label="入力フォーム">
+    <div class="pane-head">
+      <h2>注文書の内容を入力</h2>
+      <p class="hint">入力すると右のプレビューにすぐ反映されます。最初からサンプルデータが入っています。</p>
+    </div>
+
+    <form id="orderForm" autocomplete="off" novalidate>
+
+      <fieldset class="card">
+        <legend>注文元（自社）の情報</legend>
+
+        <div class="field">
+          <label for="issuerName">自社名・屋号・氏名<span class="req">必須</span></label>
+          <input type="text" id="issuerName" name="issuerName" placeholder="例：山田 太郎 / Yamada Design">
+        </div>
+
+        <div class="field">
+          <label for="issuerAddress">住所</label>
+          <textarea id="issuerAddress" name="issuerAddress" rows="2" placeholder="例：〒150-0001 東京都渋谷区神宮前1-2-3 サンプルビル5F"></textarea>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="issuerPerson">担当者名</label>
+            <input type="text" id="issuerPerson" name="issuerPerson" placeholder="例：山田 太郎">
+          </div>
+          <div class="field">
+            <label for="issuerPhone">電話番号</label>
+            <input type="text" id="issuerPhone" name="issuerPhone" inputmode="tel" placeholder="例：090-1234-5678">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="issuerEmail">メールアドレス</label>
+          <input type="text" id="issuerEmail" name="issuerEmail" inputmode="email" spellcheck="false" placeholder="例：info@example.com">
+        </div>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>注文先（仕入先）の情報</legend>
+
+        <div class="field">
+          <label for="supplierName">注文先の会社名・氏名<span class="req">必須</span></label>
+          <input type="text" id="supplierName" name="supplierName" placeholder="例：株式会社サンプル商会">
+        </div>
+
+        <div class="field">
+          <label for="supplierHonorific">敬称</label>
+          <select id="supplierHonorific" name="supplierHonorific">
+            <option value="御中" selected>御中</option>
+            <option value="様">様</option>
+            <option value="">（付けない）</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="supplierAddress">住所</label>
+          <textarea id="supplierAddress" name="supplierAddress" rows="2" placeholder="例：〒541-0041 大阪府大阪市中央区北浜1-2-3 サンプルビル2F"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="supplierPerson">担当者名（任意）</label>
+          <input type="text" id="supplierPerson" name="supplierPerson" placeholder="例：佐藤 様">
+        </div>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>注文の情報</legend>
+
+        <div class="field">
+          <label for="subject">件名（任意）</label>
+          <input type="text" id="subject" name="subject" placeholder="例：事務所備品のご注文">
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="orderDate">注文日<span class="req">必須</span></label>
+            <input type="date" id="orderDate" name="orderDate">
+          </div>
+          <div class="field">
+            <label for="orderNo">注文番号</label>
+            <input type="text" id="orderNo" name="orderNo" spellcheck="false" placeholder="例：CHU-2026-001">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="deliveryPreset">納期</label>
+            <select id="deliveryPreset" name="deliveryPreset">
+              <option value="7">注文日から 7日</option>
+              <option value="14" selected>注文日から 14日</option>
+              <option value="30">注文日から 30日</option>
+              <option value="60">注文日から 60日</option>
+              <option value="0">日付を指定する</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="deliveryDate">納期の日付</label>
+            <input type="date" id="deliveryDate" name="deliveryDate">
+          </div>
+        </div>
+        <p class="help">「注文日から◯日」を選ぶと納期が自動計算されます。日付を直接編集すると「日付を指定する」に切り替わります。</p>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>支払条件</legend>
+
+        <div class="field">
+          <label for="paymentPreset">支払条件のプリセット</label>
+          <select id="paymentPreset" name="paymentPreset">
+            <option value="月末締め翌月末払い" selected>月末締め翌月末払い</option>
+            <option value="月末締め翌月10日払い">月末締め翌月10日払い</option>
+            <option value="納品時現金払い">納品時現金払い</option>
+            <option value="納品後30日以内">納品後30日以内</option>
+            <option value="着手金50%・納品時50%">着手金50%・納品時50%</option>
+            <option value="0">自由入力する</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="paymentTerms">支払条件の内容</label>
+          <textarea id="paymentTerms" name="paymentTerms" rows="2" placeholder="例：月末締め翌月末払い（銀行振込・振込手数料は当方負担）"></textarea>
+        </div>
+        <p class="help">プリセットを選ぶと内容欄に反映されます。内容欄を直接編集すると「自由入力する」に切り替わります。</p>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>明細行</legend>
+
+        <div class="rows-head" aria-hidden="true">
+          <span class="c-name">品名・品番</span>
+          <span class="c-qty">数量</span>
+          <span class="c-unit">単位</span>
+          <span class="c-price">単価</span>
+          <span class="c-del"></span>
+        </div>
+
+        <div id="rowsContainer" class="rows"></div>
+
+        <div class="rows-actions">
+          <button type="button" class="btn btn-outline btn-sm" id="addRowBtn">
+            <svg viewBox="0 0 16 16" aria-hidden="true" class="ic"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            明細行を追加
+          </button>
+          <p class="hint">単価は<strong>税抜金額</strong>で入力してください。</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>消費税</legend>
+
+        <div class="field">
+          <label for="taxRate">消費税率</label>
+          <select id="taxRate" name="taxRate">
+            <option value="10" selected>10%（標準税率）</option>
+            <option value="8">8%（軽減税率）</option>
+          </select>
+        </div>
+        <p class="help">注文全体に適用する税率です。軽減税率の対象となる取引では 8% を選択してください。</p>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>備考・注文条件</legend>
+
+        <div class="field">
+          <label for="notes">備考・特記事項</label>
+          <textarea id="notes" name="notes" rows="4" placeholder="例：納入場所：弊社事務所（上記住所）&#10;納入方法：ヤマト運輸 着払い"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="conditions">その他の条件（任意）</label>
+          <textarea id="conditions" name="conditions" rows="3" placeholder="例：納品物に不備があった場合は速やかにご連絡のうえ、交換をお願いいたします。"></textarea>
+        </div>
+      </fieldset>
+
+      <p class="privacy-note">
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="ic"><path d="M8 1.5 3 3.5v4c0 3 2.1 5.6 5 6.5 2.9-.9 5-3.5 5-6.5v-4L8 1.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        入力した内容はサーバーに送信されません。すべてお使いのブラウザ内だけで処理されます。
+      </p>
+    </form>
+  </section>
+
+  <!-- ============ プレビュー / 印刷対象 ============ -->
+  <section class="pane preview-pane" aria-label="プレビュー">
+    <div class="preview-bar no-print">
+      <span class="dot"></span> プレビュー（A4）
+    </div>
+
+    <div class="paper-wrap">
+      <article class="paper" id="paper">
+        <h1 class="doc-title">注文書</h1>
+
+        <header class="doc-head">
+          <div class="doc-head-left">
+            <p class="doc-to">
+              <span class="client-name" id="pvSupplierName">株式会社サンプル商会</span><span class="honorific" id="pvHonorific">御中</span>
+            </p>
+            <p class="doc-subject" id="pvSubjectLine" hidden><span id="pvSubject"></span></p>
+            <p class="doc-meta-line" id="pvSupplierAddrLine" hidden>
+              <span class="meta-label">ご住所</span>
+              <span id="pvSupplierAddress"></span>
+            </p>
+            <p class="doc-meta-line" id="pvSupplierPersonLine" hidden>
+              <span class="meta-label">ご担当</span>
+              <span id="pvSupplierPerson"></span>
+            </p>
+          </div>
+
+          <div class="doc-head-right">
+            <p class="issuer-name" id="pvIssuerName">山田 太郎</p>
+            <p class="issuer-meta" id="pvIssuerAddress" hidden></p>
+            <p class="issuer-meta" id="pvIssuerPerson" hidden></p>
+            <p class="issuer-meta" id="pvIssuerPhone" hidden></p>
+            <p class="issuer-meta" id="pvIssuerEmail" hidden></p>
+          </div>
+        </header>
+
+        <div class="doc-meta-grid">
+          <p class="doc-meta-line">
+            <span class="meta-label">注文日</span>
+            <span id="pvOrderDate"></span>
+          </p>
+          <p class="doc-meta-line" id="pvOrderNoLine" hidden>
+            <span class="meta-label">注文番号</span>
+            <span id="pvOrderNo"></span>
+          </p>
+        </div>
+
+        <div class="total-banner">
+          <span class="total-label">ご注文金額（税込）</span>
+          <span class="total-value" id="pvTotal">¥0</span>
+        </div>
+
+        <div class="terms-strip">
+          <div class="terms-item">
+            <span class="terms-key">納期</span>
+            <span class="terms-val" id="pvDelivery">—</span>
+          </div>
+          <div class="terms-item">
+            <span class="terms-key">支払条件</span>
+            <span class="terms-val" id="pvPayment">—</span>
+          </div>
+        </div>
+
+        <table class="items-table">
+          <thead>
+            <tr>
+              <th class="th-name">品名・品番</th>
+              <th class="th-qty">数量</th>
+              <th class="th-unit">単位</th>
+              <th class="th-price">単価</th>
+              <th class="th-amount">金額</th>
+            </tr>
+          </thead>
+          <tbody id="pvItems"></tbody>
+        </table>
+
+        <div class="summary">
+          <div class="summary-note">
+            <p class="summary-lead">上記のとおり注文いたします。<br>ご確認のほど、よろしくお願い申し上げます。</p>
+          </div>
+
+          <div class="summary-totals">
+            <div class="sum-row">
+              <span>小計（税抜）</span>
+              <span class="num" id="pvSubtotal">¥0</span>
+            </div>
+            <div class="sum-row">
+              <span id="pvTaxLabel">消費税（10%）</span>
+              <span class="num" id="pvTaxTotal">¥0</span>
+            </div>
+            <div class="sum-row sum-grand">
+              <span>合計</span>
+              <span class="num" id="pvGrand">¥0</span>
+            </div>
+          </div>
+        </div>
+
+        <footer class="doc-foot">
+          <div class="foot-block" id="pvNotesBlock" hidden>
+            <h2 class="foot-title">備考・特記事項</h2>
+            <p class="foot-body" id="pvNotes"></p>
+          </div>
+          <div class="foot-block" id="pvConditionsBlock" hidden>
+            <h2 class="foot-title">その他の条件</h2>
+            <p class="foot-body" id="pvConditions"></p>
+          </div>
+        </footer>
+
+        <p class="paper-footnote" id="pvPaperNote" hidden></p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ SEO 説明文 ============ -->
+  <section class="seo no-print" aria-label="ツールについて">
+    <h2>注文書 PDF 生成ツールとは</h2>
+    <p>
+      フリーランス・個人事業主・小規模事業者が仕入先へ発注する際に使う<strong>注文書（発注書）</strong>を、ブラウザ上でかんたんに作成できる無料ツールです。
+      注文元（自社）・注文先（仕入先）の情報、注文日、注文番号、<strong>納期</strong>、<strong>支払条件</strong>、明細行（品名・数量・単位・単価）、消費税、備考を入力するだけで、
+      A4 サイズの注文書がそのまま完成します。作成した注文書は「印刷 / PDF保存」ボタンから PDF として保存でき、メール添付やチャットでの送付に使えます。
+    </p>
+    <p>
+      入力内容はサーバーへ送信されず、すべてお使いの端末のブラウザ内だけで処理されます。発注管理システムや会計ソフトを契約するほどではない、
+      という場面に向いています。登録もインストールも不要です。
+    </p>
+
+    <h3>注文書に載せておきたい項目</h3>
+    <ol class="seo-list">
+      <li><strong>表題「注文書」</strong> — 見積書や請求書と取り違えられないよう、書類の種類を明記します。</li>
+      <li><strong>注文先（仕入先）の名称と敬称</strong> — 法人なら「御中」、個人なら「様」が一般的です。</li>
+      <li><strong>注文日と注文番号</strong> — 注文番号（例：CHU-2026-001）を振っておくと、後の納品書・請求書との突き合わせが楽になります。</li>
+      <li><strong>納期</strong> — いつまでに納品してほしいかを明示します。トラブル防止のためにも重要な項目です。</li>
+      <li><strong>支払条件</strong> — 「月末締め翌月末払い」「納品時現金」など、代金の支払時期と方法を明記します。</li>
+      <li><strong>明細（品名・数量・単位・単価・金額）</strong> — 何をいくつ、いくらで発注するのかを分解して示します。単位（個・本・式など）も忘れずに。</li>
+      <li><strong>小計・消費税・合計</strong> — 税抜金額と税込金額を分けて記載します。</li>
+      <li><strong>注文元の情報と担当者</strong> — 会社名・屋号、住所、担当者名、電話番号などの連絡先を記載します。</li>
+    </ol>
+
+    <h3>注文書と発注書・注文請書の関係</h3>
+    <p>
+      注文書と<strong>発注書</strong>は、実務上ほぼ同じ意味で使われることが多い書類です。買い手が売り手へ「この内容で発注します」と伝える書面を指します。
+      一方で<strong>注文請書</strong>は、その注文を売り手が「承知しました」と受諾したことを示す書類で、注文書に対する返信という位置づけになります。
+      本ツールで作成するのは、買い手側が発行する注文書です。注文書はインボイス制度上の適格請求書ではないため、登録番号の記載は必須ではありません。
+    </p>
+
+    <h3>使い方</h3>
+    <ol class="seo-list">
+      <li>左側のフォームに注文元（自社）の情報を入力します。</li>
+      <li>注文先（仕入先）の会社名・敬称・住所・担当者を入力します。</li>
+      <li>件名・注文日・注文番号を入力します。納期はプリセットから選ぶと自動計算されます。</li>
+      <li>支払条件をプリセットから選ぶか、自由に入力します。</li>
+      <li>明細行を入力します。行の追加・削除は自由にできます。数量・単位・単価を入れると金額が自動計算されます。</li>
+      <li>消費税率（10% / 8%）と備考を入力すると、右のプレビューと合計金額が自動で更新されます。</li>
+      <li>「印刷 / PDF保存」ボタンを押し、印刷先で「PDF に保存」を選ぶと PDF ファイルとして保存できます。</li>
+    </ol>
+
+    <h3>よくある質問</h3>
+    <dl class="faq">
+      <dt>注文書と発注書は何が違いますか？</dt>
+      <dd>実務上はほぼ同じ意味で使われます。買い手が売り手へ「この内容で発注します」と伝える書面を指し、本ツールでは表題を「注文書」としたうえで、書類の性格は同じものとして作成できます。取引先の呼び方に合わせて使い分けてください。</dd>
+
+      <dt>注文書に印鑑（社印・角印）は必要ですか？</dt>
+      <dd>法律上の必須要件ではありませんが、商慣習として社印や角印を押して発行する場面が多くあります。本ツールはブラウザ上で書類を作るため捺印はできません。PDF を印刷したうえで押印するか、電子契約サービスをご利用ください。</dd>
+
+      <dt>注文書に登録番号（インボイス番号）は必要ですか？</dt>
+      <dd>注文書はインボイス制度上の適格請求書ではないため、登録番号の記載は必須ではありません。本ツールも登録番号欄は設けていません。実際に仕入れた後の請求・支払では、別途 適格請求書（請求書）で処理します。</dd>
+
+      <dt>納期や支払条件はどう記載すればよいですか？</dt>
+      <dd>本ツールでは納期を注文日から 7日・14日・30日・60日、または任意の日付で指定できます。支払条件は「月末締め翌月末払い」「納品時現金」などのプリセットから選ぶか、自由に入力できます。取引先との取り決めに合わせてください。</dd>
+
+      <dt>入力したデータはどこかに保存されますか？</dt>
+      <dd>いいえ。入力内容はサーバーへ送信されず、お使いの端末のブラウザ内だけで処理されます。ページを閉じると内容は破棄されます。</dd>
+
+      <dt>作成した注文書はそのまま送れますか？</dt>
+      <dd>「印刷 / PDF保存」から PDF として保存できます。金額・納期・支払条件の最終確認はご自身で行ってください。</dd>
+    </dl>
+
+    <p class="disclaimer">
+      ※ 本ツールは注文書作成の補助を目的としたものであり、法令や商慣習への適合を保証するものではありません。記載内容の最終確認はご自身で、または税理士などの専門家にご相談ください。
+    </p>
+  </section>
+</main>
+
+<footer class="site-footer no-print">
+  <div class="wrap">
+    <p>注文書 作成ツール — ブラウザだけで動く無料の注文書ジェネレーター</p>
+    <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSfHGUfgAlViT3TFiVtJi_EpJ4ioUpd9oGyaJ7rehEV-gBH_PA/viewform?usp=pp_url&amp;entry.1745177199=%E6%B3%A8%E6%96%87%E6%9B%B8" target="_blank" rel="noopener">ご意見・フィードバック</a></p>
+    <p style="margin-top:8px;font-size:12.5px;opacity:.75;">関連ツール：<a href="https://www.reveriel.com/mitsumori-pdf/">見積書</a> ・ <a href="https://www.reveriel.com/japan-invoice-pdf/">適格請求書</a> ・ <a href="https://www.reveriel.com/ryoshusho-pdf/">領収書</a></p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
