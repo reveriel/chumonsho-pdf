@@ -524,3 +524,98 @@
     init();
   }
 })();
+
+/* =========================================================
+   シェア（バイラル導線） — 既存機能には触れない独立モジュール
+   ========================================================= */
+(function () {
+  'use strict';
+
+  var SHARE_URL = "https://www.reveriel.com/chumonsho-pdf/";
+  var SHARE_TEXT = '無料・登録不要で注文書（発注書）を作成してPDF保存できるツール';
+  var COPY_DONE = 'コピーしました';
+  var COPY_FAIL = 'コピーできませんでした';
+
+  function byId(id) { return document.getElementById(id); }
+
+  function shareText() { return SHARE_TEXT; }
+
+  function openExternal(url) {
+    if (!url) return;
+    var a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function buildTweetUrl() {
+    return 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText()) +
+      '&url=' + encodeURIComponent(SHARE_URL);
+  }
+  function buildLineUrl() {
+    return 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(SHARE_URL);
+  }
+
+  function fallbackCopy(text) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:absolute;left:-9999px;top:0';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) { return false; }
+  }
+
+  function copyText(text) {
+    return new Promise(function (resolve) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(
+            function () { resolve(true); },
+            function () { resolve(fallbackCopy(text)); }
+          );
+          return;
+        }
+      } catch (e) { /* fallthrough */ }
+      resolve(fallbackCopy(text));
+    });
+  }
+
+  function init() {
+    var xBtn = byId('shareXBtn');
+    var lBtn = byId('shareLineBtn');
+    var cBtn = byId('shareCopyBtn');
+    var urlText = byId('shareUrlText');
+    if (!xBtn || !lBtn || !cBtn) return;
+
+    if (urlText) urlText.textContent = SHARE_URL;
+
+    xBtn.addEventListener('click', function () { openExternal(buildTweetUrl()); });
+    lBtn.addEventListener('click', function () { openExternal(buildLineUrl()); });
+
+    var copyLabel = byId('shareCopyLabel');
+    var resetTimer = null;
+    cBtn.addEventListener('click', function () {
+      var original = copyLabel ? copyLabel.textContent : '';
+      copyText(SHARE_URL).then(function (ok) {
+        if (!copyLabel) return;
+        copyLabel.textContent = ok ? COPY_DONE : COPY_FAIL;
+        if (resetTimer) clearTimeout(resetTimer);
+        resetTimer = setTimeout(function () { copyLabel.textContent = original; }, 1800);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
