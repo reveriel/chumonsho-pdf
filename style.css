@@ -740,6 +740,25 @@ input:focus, select:focus, textarea:focus {
 }
 .seo-guide-link a { color: var(--c-accent); font-weight: 700; }
 
+.seo-guides {
+  margin: 22px 0 0;
+  padding: 18px 20px 20px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  background: var(--c-surface-2);
+  max-width: 82ch;
+}
+.seo-guides h2 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: var(--c-text);
+}
+.seo-guides ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.seo-guides li { margin: 0; }
+.seo-guides a { color: var(--c-accent); font-weight: 700; text-decoration: none; }
+.seo-guides a:hover { text-decoration: underline; }
+.seo-guides span { display: block; margin-top: 3px; font-size: 12.5px; color: var(--c-text-muted); }
+
 .faq { margin: 0; max-width: 82ch; }
 .faq dt {
   font-weight: 700;
