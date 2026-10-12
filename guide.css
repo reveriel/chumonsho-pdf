@@ -1,0 +1,248 @@
+/* =========================================================
+   書き方ガイド / 法務ページ 共通スタイル
+   style.css の CSS 変数を継承し、ブランドの色味・ダークモードに追従する。
+   ========================================================= */
+
+/* ---------------- レイアウト ---------------- */
+
+.guide-col { max-width: 880px; margin-inline: auto; }
+
+/* ---------------- パンくず ---------------- */
+
+.breadcrumb {
+  padding-block: 16px 0;
+  font-size: 12.5px;
+  color: var(--c-text-faint);
+}
+.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; }
+.breadcrumb li { display: inline-flex; align-items: center; gap: 4px; }
+.breadcrumb a { color: var(--c-accent); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb li + li::before { content: "\203A"; color: var(--c-text-faint); }
+
+/* ---------------- 記事本体 ---------------- */
+
+.guide {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  margin-block: 16px 8px;
+  padding: 34px 38px 40px;
+}
+@media (max-width: 640px) { .guide { padding: 22px 18px 26px; } }
+
+.guide h1 {
+  margin: 0 0 12px;
+  font-size: 26px;
+  line-height: 1.5;
+  letter-spacing: .01em;
+  color: var(--c-text);
+}
+.guide .guide-meta { margin: 0 0 16px; font-size: 12px; color: var(--c-text-faint); }
+.guide-lead { margin: 0 0 8px; font-size: 15.5px; line-height: 1.85; color: var(--c-text-muted); }
+.guide h2 {
+  margin: 38px 0 14px;
+  padding-left: 12px;
+  font-size: 20px;
+  line-height: 1.5;
+  border-left: 4px solid var(--c-accent);
+  color: var(--c-text);
+}
+.guide h2:first-of-type { margin-top: 30px; }
+.guide h3 { margin: 26px 0 10px; font-size: 16.5px; line-height: 1.5; color: var(--c-text); }
+.guide p { margin: 0 0 14px; color: var(--c-text-muted); }
+.guide strong { color: var(--c-text); font-weight: 700; }
+.guide ul, .guide ol { margin: 0 0 16px; padding-left: 1.5em; color: var(--c-text-muted); }
+.guide li { margin-bottom: 7px; }
+.guide a:not(.btn) { color: var(--c-accent); }
+
+.guide-example {
+  margin: 0 0 16px;
+  padding: 16px 18px;
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", YuMincho, serif;
+  font-size: 14px;
+  line-height: 1.95;
+  color: var(--c-text);
+  white-space: pre-wrap;
+}
+.guide-note {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  border-left: 3px solid var(--c-accent);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--c-text-muted);
+}
+.guide-note strong { color: var(--c-text); }
+.guide-table { width: 100%; margin: 0 0 16px; border-collapse: collapse; font-size: 13.5px; }
+.guide-table th, .guide-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border: 1px solid var(--c-border);
+  color: var(--c-text-muted);
+  vertical-align: top;
+}
+.guide-table th { background: var(--c-surface-2); color: var(--c-text); font-weight: 700; white-space: nowrap; }
+
+/* ---------------- 上部 CTA ---------------- */
+
+.guide-cta-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 4px 0 26px;
+  padding: 18px 20px;
+  background: var(--c-accent-soft);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+}
+.guide-cta-box p { flex: 1 1 240px; margin: 0; font-size: 13.5px; line-height: 1.7; color: var(--c-text-muted); }
+.guide-cta-box strong { color: var(--c-text); }
+.guide-cta-box .btn { flex: none; }
+
+/* ---------------- FAQ ---------------- */
+
+.guide-faq { margin-top: 40px; }
+.guide-faq dl { margin: 0; }
+.guide-faq dt { margin-top: 16px; font-size: 14.5px; font-weight: 700; color: var(--c-text); }
+.guide-faq dd { margin: 6px 0 0; color: var(--c-text-muted); }
+
+/* ---------------- 下部 CTA ---------------- */
+
+.guide-cta-foot {
+  margin-top: 36px;
+  padding: 26px 22px;
+  text-align: center;
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+}
+.guide-cta-foot h2 { margin: 0 0 8px; padding: 0; border: 0; font-size: 18px; }
+.guide-cta-foot p { margin: 0 0 16px; font-size: 13.5px; }
+.guide-cta-foot .btn { font-size: 15px; padding: 12px 26px; }
+
+/* ---------------- 関連ガイド ---------------- */
+
+.guide-related {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  margin-block: 18px;
+  padding: 22px 24px;
+}
+.guide-related h2 { margin: 0 0 14px; font-size: 16px; color: var(--c-text); }
+.guide-related ul { list-style: none; display: grid; gap: 12px; margin: 0; padding: 0; }
+.guide-related a { color: var(--c-accent); font-weight: 600; text-decoration: none; }
+.guide-related a:hover { text-decoration: underline; }
+.guide-related .rel-desc { display: block; margin-top: 2px; font-size: 12.5px; font-weight: 400; color: var(--c-text-faint); }
+
+/* =========================================================
+   法務ページ（プライバシーポリシー / 運営者情報）
+   ========================================================= */
+
+.legal-page { padding-block: 32px 56px; }
+
+.legal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c-text-muted);
+  text-decoration: none;
+}
+.legal-back:hover { color: var(--c-accent); }
+
+.legal {
+  max-width: 780px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 32px 34px 38px;
+}
+@media (max-width: 640px) { .legal { padding: 22px 18px 28px; } }
+
+.legal h1 {
+  font-size: 24px;
+  margin: 0 0 8px;
+  line-height: 1.5;
+  color: var(--c-text);
+}
+.legal .legal-meta {
+  font-size: 12px;
+  color: var(--c-text-faint);
+  margin: 0 0 28px;
+}
+.legal h2 {
+  font-size: 17px;
+  margin: 32px 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-text);
+}
+.legal h3 { font-size: 15px; margin: 22px 0 6px; color: var(--c-text); }
+.legal p { margin: 0 0 12px; color: var(--c-text-muted); }
+.legal ol,
+.legal ul { margin: 0 0 14px; padding-left: 1.4em; color: var(--c-text-muted); }
+.legal ol { list-style: decimal; }
+.legal ul { list-style: disc; }
+.legal li { margin-bottom: 6px; }
+.legal strong { color: var(--c-text); }
+.legal a:not(.btn) { color: var(--c-accent); }
+
+.legal-table {
+  width: 100%;
+  margin: 8px 0 18px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.legal-table th,
+.legal-table td {
+  padding: 13px 16px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-text-muted);
+}
+.legal-table th {
+  width: 34%;
+  min-width: 140px;
+  font-weight: 700;
+  color: var(--c-text);
+  background: var(--c-surface-2);
+}
+.legal-table tr:last-child th,
+.legal-table tr:last-child td { border-bottom: 0; }
+
+.legal-contact {
+  margin-top: 32px;
+  padding: 18px 20px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  background: var(--c-surface-2);
+  font-size: 13.5px;
+  color: var(--c-text-muted);
+}
+.legal-contact p { margin: 0; }
+.legal-contact p + p { margin-top: 6px; }
+
+/* ---------------- 印刷 ---------------- */
+
+@media print {
+  .site-header, .site-footer, .feedback-fab, .breadcrumb,
+  .guide-cta-box, .guide-cta-foot, .guide-related,
+  .legal-back { display: none !important; }
+  .guide, .legal { border: 0; box-shadow: none; padding: 0; background: transparent; }
+}

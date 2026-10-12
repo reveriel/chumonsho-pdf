@@ -727,6 +727,19 @@ input:focus, select:focus, textarea:focus {
 
 .seo-list li { margin-bottom: 7px; }
 
+.seo-guide-link {
+  margin: 18px 0 0;
+  padding: 13px 16px;
+  background: var(--c-accent-soft);
+  border: 1px solid var(--c-border);
+  border-left: 3px solid var(--c-accent);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  color: var(--c-text-muted);
+  max-width: 82ch;
+}
+.seo-guide-link a { color: var(--c-accent); font-weight: 700; }
+
 .faq { margin: 0; max-width: 82ch; }
 .faq dt {
   font-weight: 700;
