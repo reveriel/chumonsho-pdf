@@ -40,12 +40,48 @@
     return '¥' + comma(n);
   }
 
-  // "2026-10-11" → "2026年10月11日"
+  // 和暦の元号（新しい順）。start はその元号の開始年（西暦）。
+  var ERAS = [
+    { name: '令和', start: 2019 },
+    { name: '平成', start: 1989 },
+    { name: '昭和', start: 1926 },
+    { name: '大正', start: 1912 },
+    { name: '明治', start: 1868 }
+  ];
+
+  // 西暦年 → { name: '令和', year: 8 }（該当なしは null）
+  function toWarekiYear(year) {
+    for (var i = 0; i < ERAS.length; i++) {
+      if (year >= ERAS[i].start) {
+        return { name: ERAS[i].name, year: year - ERAS[i].start + 1 };
+      }
+    }
+    return null;
+  }
+
+  // 書式設定（和暦 / 西暦）を取得
+  function currentDateStyle() {
+    var el = document.querySelector('input[name="dateStyle"]:checked');
+    return el && el.value === 'wareki' ? 'wareki' : 'seireki';
+  }
+
+  // "2026-10-11" → "2026年10月11日" / 和暦時は "令和8年10月11日"（元年は「元年」）
   function formatDate(iso) {
     if (!iso) return '';
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
     if (!m) return iso;
-    return Number(m[1]) + '年' + Number(m[2]) + '月' + Number(m[3]) + '日';
+
+    var year = Number(m[1]);
+    var month = Number(m[2]);
+    var day = Number(m[3]);
+
+    if (currentDateStyle() === 'wareki') {
+      var era = toWarekiYear(year);
+      if (era) {
+        return era.name + (era.year === 1 ? '元' : String(era.year)) + '年' + month + '月' + day + '日';
+      }
+    }
+    return year + '年' + month + '月' + day + '日';
   }
 
   // 数量は小数第2位まで、整数ならそのまま
@@ -225,7 +261,24 @@
     el.textContent = text;
   }
 
+  /* 書式（字体・太字）を紙面へ反映。日付の西暦/和暦は formatDate 側で参照。 */
+  function applyDocStyle() {
+    var paperEl = $('paper');
+    if (!paperEl) return;
+
+    var fontEl = document.querySelector('input[name="docFont"]:checked');
+    var weightEl = document.querySelector('input[name="docWeight"]:checked');
+    var font = fontEl ? fontEl.value : 'gothic';
+    var isBold = !!weightEl && weightEl.value === 'bold';
+
+    paperEl.classList.toggle('font-mincho', font === 'mincho');
+    paperEl.classList.toggle('font-gothic', font !== 'mincho');
+    paperEl.classList.toggle('doc-bold', isBold);
+  }
+
   function renderPreview() {
+    applyDocStyle();
+
     /* --- 注文元 --- */
     var issuerName = $('issuerName').value.trim();
     $('pvIssuerName').innerHTML = issuerName
@@ -463,6 +516,14 @@
     syncDeliveryFromOrderDate();
     $('paymentPreset').value = DEFAULTS.paymentPreset;
     $('paymentTerms').value = DEFAULTS.paymentTerms;
+
+    // 書式は既定（ゴシック体・通常・西暦）に戻す
+    var fontDefault = document.querySelector('input[name="docFont"][value="gothic"]');
+    var weightDefault = document.querySelector('input[name="docWeight"][value="normal"]');
+    var dateDefault = document.querySelector('input[name="dateStyle"][value="seireki"]');
+    if (fontDefault) fontDefault.checked = true;
+    if (weightDefault) weightDefault.checked = true;
+    if (dateDefault) dateDefault.checked = true;
   }
 
   function resetForm() {

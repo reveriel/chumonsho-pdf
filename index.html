@@ -291,6 +291,53 @@
       </fieldset>
 
       <fieldset class="card">
+        <legend>書式</legend>
+
+        <div class="field">
+          <span class="field-label" id="docFontLabel">字体</span>
+          <div class="seg" role="radiogroup" aria-labelledby="docFontLabel">
+            <label class="seg-item">
+              <input type="radio" name="docFont" value="mincho">
+              <span>明朝体</span>
+            </label>
+            <label class="seg-item">
+              <input type="radio" name="docFont" value="gothic" checked>
+              <span>ゴシック体</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-label" id="docWeightLabel">太字</span>
+          <div class="seg" role="radiogroup" aria-labelledby="docWeightLabel">
+            <label class="seg-item">
+              <input type="radio" name="docWeight" value="normal" checked>
+              <span>通常</span>
+            </label>
+            <label class="seg-item">
+              <input type="radio" name="docWeight" value="bold">
+              <span>太字</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-label" id="dateStyleLabel">日付</span>
+          <div class="seg" role="radiogroup" aria-labelledby="dateStyleLabel">
+            <label class="seg-item">
+              <input type="radio" name="dateStyle" value="seireki" checked>
+              <span>西暦</span>
+            </label>
+            <label class="seg-item">
+              <input type="radio" name="dateStyle" value="wareki">
+              <span>和暦</span>
+            </label>
+          </div>
+          <p class="help">和暦を選ぶと、注文日・納期を「令和8年10月21日」のように表示します。</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="card">
         <legend>備考・注文条件</legend>
 
         <div class="field">
