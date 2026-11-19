@@ -265,6 +265,7 @@
           <span class="c-qty">数量</span>
           <span class="c-unit">単位</span>
           <span class="c-price">単価</span>
+          <span class="c-rate">税率</span>
           <span class="c-del"></span>
         </div>
 
@@ -283,13 +284,13 @@
         <legend>消費税</legend>
 
         <div class="field">
-          <label for="taxRate">消費税率</label>
+          <label for="taxRate">既定の消費税率</label>
           <select id="taxRate" name="taxRate">
             <option value="10" selected>10%（標準税率）</option>
             <option value="8">8%（軽減税率）</option>
           </select>
         </div>
-        <p class="help">注文全体に適用する税率です。軽減税率の対象となる取引では 8% を選択してください。</p>
+        <p class="help">新しく追加する明細行の税率です。行ごとに 10% / 8% を切り替えられるため、軽減税率の品目が混在する注文書もそのまま作成できます。</p>
       </fieldset>
 
       <fieldset class="card">
@@ -449,6 +450,7 @@
               <span id="pvTaxLabel">消費税（10%）</span>
               <span class="num" id="pvTaxTotal">¥0</span>
             </div>
+            <p class="tax-break" id="pvTaxBreak" hidden></p>
             <div class="sum-row sum-grand">
               <span>合計</span>
               <span class="num" id="pvGrand">¥0</span>

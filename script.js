@@ -156,7 +156,8 @@
       name: data && data.name != null ? data.name : '',
       qty: data && data.qty != null ? data.qty : 1,
       unit: data && data.unit != null ? data.unit : '',
-      price: data && data.price != null ? data.price : 0
+      price: data && data.price != null ? data.price : 0,
+      rate: data && data.rate != null ? Number(data.rate) : currentTaxRate()
     };
     rows.push(row);
     return row;
@@ -171,6 +172,7 @@
       '<input type="text" class="i-qty num" aria-label="数量" inputmode="decimal" placeholder="1">' +
       '<input type="text" class="i-unit" aria-label="単位" placeholder="個">' +
       '<input type="text" class="i-price num" aria-label="単価（税抜）" inputmode="numeric" placeholder="0">' +
+      '<select class="i-rate" aria-label="税率"><option value="10">10%</option><option value="8">8%</option></select>' +
       '<button type="button" class="btn btn-icon i-del" aria-label="この行を削除">' +
         '<svg viewBox="0 0 16 16" class="ic" aria-hidden="true">' +
           '<path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8a1 1 0 0 0 1 .9h3.8a1 1 0 0 0 1-.9l.6-8" ' +
@@ -182,6 +184,7 @@
     el.querySelector('.i-qty').value = formatQty(row.qty);
     el.querySelector('.i-unit').value = row.unit;
     el.querySelector('.i-price').value = row.price ? comma(row.price) : '';
+    el.querySelector('.i-rate').value = String(row.rate || 10);
 
     return el;
   }
@@ -217,26 +220,31 @@
   }
 
   function computeTotals() {
-    var rate = currentTaxRate();
-
     var lines = rows.map(function (row) {
-      return { row: row, amount: Math.round(row.qty * row.price) };
+      return {
+        row: row,
+        amount: Math.round(row.qty * row.price),
+        rate: Number(row.rate) === 8 ? 8 : 10
+      };
     });
 
+    var groups = { 10: { rate: 10, subtotal: 0, tax: 0 }, 8: { rate: 8, subtotal: 0, tax: 0 } };
     var subtotal = 0;
     lines.forEach(function (line) {
-      if (line.amount > 0) subtotal += line.amount;
+      if (line.amount <= 0) return;
+      subtotal += line.amount;
+      groups[line.rate].subtotal += line.amount;
     });
+    [10, 8].forEach(function (r) { groups[r].tax = Math.floor(groups[r].subtotal * r / 100); });
 
-    // 1円未満は切り捨て
-    var tax = Math.floor(subtotal * rate / 100);
-
+    var used = [10, 8].map(function (r) { return groups[r]; }).filter(function (g) { return g.subtotal > 0; });
     return {
       lines: lines,
-      rate: rate,
+      groups: used,
+      rate: used.length === 1 ? used[0].rate : 0,
       subtotal: subtotal,
-      tax: tax,
-      grand: subtotal + tax
+      tax: groups[10].tax + groups[8].tax,
+      grand: subtotal + groups[10].tax + groups[8].tax
     };
   }
 
@@ -381,8 +389,21 @@
 
     /* --- 小計・消費税・合計 --- */
     $('pvSubtotal').textContent = yen(totals.subtotal);
-    $('pvTaxLabel').textContent = '消費税（' + totals.rate + '%）';
+    $('pvTaxLabel').textContent = (totals.groups.length === 1 && totals.groups[0].rate)
+      ? '消費税（' + totals.groups[0].rate + '%）'
+      : '消費税（合計）';
     $('pvTaxTotal').textContent = yen(totals.tax);
+    var breakEl = $('pvTaxBreak');
+    if (breakEl) {
+      if (totals.groups.length > 1) {
+        breakEl.hidden = false;
+        breakEl.textContent = totals.groups.map(function (g) {
+          return g.rate + '%対象 ' + yen(g.subtotal) + '（税 ' + yen(g.tax) + '）';
+        }).join(' / ');
+      } else {
+        breakEl.hidden = true;
+      }
+    }
     $('pvTotal').textContent = yen(totals.grand);
     $('pvGrand').textContent = yen(totals.grand);
 
@@ -463,6 +484,8 @@
       row.unit = event.target.value;
     } else if (event.target.classList.contains('i-price')) {
       row.price = parseMoney(event.target.value);
+    } else if (event.target.classList.contains('i-rate')) {
+      row.rate = Number(event.target.value) === 8 ? 8 : 10;
     }
     renderPreview();
   }

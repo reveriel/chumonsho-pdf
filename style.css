@@ -350,7 +350,7 @@ input:focus, select:focus, textarea:focus {
 .rows-head,
 .row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 58px 56px 100px 30px;
+  grid-template-columns: minmax(0, 1fr) 52px 50px 92px 58px 30px;
   gap: 7px;
   align-items: center;
 }
@@ -1110,3 +1110,20 @@ input:focus, select:focus, textarea:focus {
   color: var(--c-text-faint); font-size: 11.5px; text-decoration: underline;
 }
 @media print { .profile-hint { display: none !important; } }
+
+/* ===== 行ごとの税率 ===== */
+.i-rate {
+  width: 100%;
+  padding: 7px 4px;
+  font-size: 12.5px;
+  color: var(--c-text);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+}
+.tax-break {
+  margin: 4px 0 0;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--c-text-muted);
+}
