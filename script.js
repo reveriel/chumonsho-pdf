@@ -536,12 +536,80 @@
      初期化
      --------------------------------------------------------- */
 
+
+  /* ---------------------------------------------------------
+     前回入力の保存・復元（この端末内のみ / サーバー送信なし）
+     --------------------------------------------------------- */
+  var PROFILE_KEY = 'chumonsho.profile.v1';
+  var PROFILE_FIELDS = ['issuerName','issuerPerson','issuerAddress','issuerPhone','issuerEmail','supplierName','supplierHonorific','supplierAddress','conditions','notes'];
+  var profileStore = (function () {
+    try {
+      var k = '__cm_test__';
+      window.localStorage.setItem(k, '1');
+      window.localStorage.removeItem(k);
+      return window.localStorage;
+    } catch (e) { return null; }
+  })();
+  var profileTimer = null;
+
+  function queueSaveProfile() {
+    if (!profileStore) return;
+    if (profileTimer) clearTimeout(profileTimer);
+    profileTimer = setTimeout(function () {
+      var data = {};
+      PROFILE_FIELDS.forEach(function (id) { var el = $(id); if (el) data[id] = el.value; });
+      data.rows = rows.map(function (r) { return { name: r.name, qty: r.qty, unit: r.unit, price: r.price }; });
+      try { profileStore.setItem(PROFILE_KEY, JSON.stringify({ v: 1, savedAt: new Date().toISOString(), fields: data })); } catch (e) {}
+    }, 500);
+  }
+
+  function restoreProfile() {
+    if (!profileStore) return false;
+    var raw, parsed;
+    try { raw = profileStore.getItem(PROFILE_KEY); } catch (e) { return false; }
+    if (!raw) return false;
+    try { parsed = JSON.parse(raw); } catch (e) { return false; }
+    if (!parsed || parsed.v !== 1 || !parsed.fields) return false;
+    var f = parsed.fields, filled = 0;
+    PROFILE_FIELDS.forEach(function (id) {
+      var el = $(id);
+      if (el && f[id] !== undefined) { el.value = f[id]; filled++; }
+    });
+    if (Array.isArray(f.rows) && f.rows.length) {
+      var container = $('rowsContainer');
+      container.innerHTML = '';
+      rows = [];
+      rowSeq = 0;
+      f.rows.slice(0, 50).forEach(function (r) { addRowToDOM({ name: r.name, qty: r.qty, unit: r.unit, price: r.price }); });
+      filled++;
+    }
+    return filled > 0;
+  }
+
+  function showProfileHint() {
+    var form = $('orderForm');
+    if (!form || !form.parentNode) return;
+    var bar = document.createElement('div');
+    bar.className = 'profile-hint no-print';
+    bar.innerHTML = '前回入力した内容を復元しました。<button type="button" class="profile-delete" id="profileDelete">保存データを削除</button>';
+    form.parentNode.insertBefore(bar, form);
+    $('profileDelete').addEventListener('click', function () {
+      try { profileStore.removeItem(PROFILE_KEY); } catch (e) {}
+      if (bar.parentNode) bar.parentNode.removeChild(bar);
+    });
+  }
+
   function init() {
     applyFieldDefaults();
 
     rowSeq = 0;
     rows = [];
     DEFAULT_ROWS.forEach(function (r) { addRowToDOM(r); });
+
+    if (restoreProfile()) {
+      showProfileHint();
+      renderPreview();
+    }
 
     $('orderForm').addEventListener('input', function (event) {
       if (event.target.closest('.row')) return;
@@ -575,6 +643,11 @@
     });
 
     $('resetBtn').addEventListener('click', resetForm);
+
+    $('orderForm').addEventListener('input', queueSaveProfile);
+    $('orderForm').addEventListener('change', queueSaveProfile);
+    $('rowsContainer').addEventListener('input', queueSaveProfile);
+    $('rowsContainer').addEventListener('change', queueSaveProfile);
 
     renderPreview();
   }
