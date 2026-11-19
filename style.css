@@ -1085,3 +1085,8 @@ input:focus, select:focus, textarea:focus {
 .pr-note { margin: 12px 0 0; font-size: 11.5px; line-height: 1.6; color: var(--c-text-faint); }
 .pr-pixel { position: absolute; left: -9999px; }
 @media print { .pr-affiliate { display: none !important; } }
+
+/* ===== モバイル：入力欄のフォントを16pxに（iOSの自動ズーム防止） ===== */
+@media (max-width: 720px) {
+  input, select, textarea { font-size: 16px !important; }
+}
